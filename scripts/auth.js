@@ -49,7 +49,7 @@ if (login_container && login_btn) {
       .then((res) => {
         localStorage.setItem("ArtOasis-user", JSON.stringify(res));
         localStorage.setItem("ArtOasis-token", res.token);
-        window.location.href = "profile.html";
+        window.location.href = `profile.html?id=${res.id}`;
       })
       .catch((e) => console.log(e));
   });
