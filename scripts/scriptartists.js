@@ -385,13 +385,14 @@ function renderArtists(artists) {
   artists.forEach((artist, index) => {
     const card = artistCardTemplate.content.cloneNode(true);
     const artistCard = card.querySelector(".artist-card");
+    artistCard.style.opacity = 1;
     artistCard.style.animationDelay = `${index * 0.1}s`;
     card.querySelector(".avatar-image").src = artist.avatarSrc;
     card.querySelector(".avatar-image").alt = artist.name;
     const artistLink = card.querySelector(".artist-link");
     artistLink.href = `profile.html?id=${artist.id}`;
     artistLink.textContent = artist.name;
-    card.querySelector(".artist-specialty").textContent = artist.specialty;
+    card.querySelector(".artist-specialty").style.display = "none";
     card.querySelector(".artist-bio").textContent = artist.bio;
     card.querySelector(".artwork-count").textContent = artist.artworkCount;
     card.querySelector(".follower-count").textContent = artist.followers;

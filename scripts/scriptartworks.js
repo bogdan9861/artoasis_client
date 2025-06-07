@@ -139,8 +139,11 @@ function renderArtworks(artworks) {
   artworks.forEach((artwork, index) => {
     const card = artworkCardTemplate.content.cloneNode(true);
     const artworkCard = card.querySelector(".artwork-card");
+
+    artworkCard.style.opacity = 1;
     if (artwork.featured) artworkCard.classList.add("featured");
     artworkCard.style.animationDelay = `${index * 0.1}s`;
+
     card.querySelector(".artwork-image").src = artwork.imageSrc;
     card.querySelector(".artwork-image").alt = artwork.title;
     const artworkLinks = card.querySelectorAll(".artwork-link");
