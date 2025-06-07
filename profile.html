@@ -1014,7 +1014,7 @@
       function renderArtworks(artworks, container) {
         container.innerHTML = "";
 
-        artworks.forEach((artwork, index) => {
+        artworks?.forEach((artwork, index) => {
           const card = document
             .getElementById("artwork-card-template")
             .content.cloneNode(true);
@@ -1117,7 +1117,9 @@
 
               onSavesInitialized(res.isFavorite);
             })
-            .catch((e) => {});
+            .catch((e) => {
+              console.log(e);
+            });
 
           const onSavesInitialized = (isFavorite) => {
             saveButton.addEventListener("click", function () {

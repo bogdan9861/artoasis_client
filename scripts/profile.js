@@ -62,28 +62,28 @@ const onUserLoaded = (user) => {
   }));
 
   const likes = user.likes.map((like) => ({
-    id: like.Post.id,
-    title: like.Post.title,
-    artist: like.Post.User.name,
-    imageSrc: setFile(like.Post.media),
-    likes: like.Post.rating,
-    comments: like.Post.comments,
-    tags: like.Post.tags || [],
+    id: like?.Post?.id,
+    title: like?.Post?.title,
+    artist: like?.Post?.User?.name,
+    imageSrc: setFile(like?.Post?.media),
+    likes: like?.Post?.rating,
+    comments: like?.Post?.comments,
+    tags: like?.Post?.tags || [],
     featured: false,
-    artistAvatar: setFile(like.Post.User.avatar),
+    artistAvatar: setFile(like?.Post?.User?.avatar),
     profileSlug: "youssef",
   }));
 
-  const favorites = user.Favorite.map((favorite) => ({
-    id: favorite.post.id,
-    title: favorite.post.title,
-    artist: favorite.user.name,
-    imageSrc: setFile(favorite.post.media),
-    likes: favorite.post.rating,
-    comments: favorite.post.comments,
-    tags: favorite.post.tags || [],
+  const favorites = user.favorite?.map((favorite) => ({
+    id: favorite?.post.id,
+    title: favorite?.post.title,
+    artist: favorite?.user.name,
+    imageSrc: setFile(favorite?.post.media),
+    likes: favorite?.post.rating,
+    comments: favorite?.post.comments,
+    tags: favorite?.post.tags || [],
     featured: false,
-    artistAvatar: setFile(favorite.user.avatar),
+    artistAvatar: setFile(favorite?.user.avatar),
     profileSlug: "youssef",
   }));
 
@@ -118,7 +118,7 @@ const onUserLoaded = (user) => {
       formData.append("image", avatar);
     }
 
-    fetch("http://localhost:8080/api/users/", {
+    fetch("https://artoasis-server.onrender.com/api/users/", {
       method: "PUT",
       body: formData,
       headers: {
@@ -145,7 +145,7 @@ const onUserLoaded = (user) => {
     if (banner) {
       formData.append("banner", banner);
 
-      fetch("http://localhost:8080/api/users/set-banner", {
+      fetch("https://artoasis-server.onrender.com/api/users/set-banner", {
         method: "PUT",
         body: formData,
         headers: {
@@ -227,7 +227,7 @@ const onUserLoaded = (user) => {
 
     create_modal.classList.remove("active");
 
-    fetch("http://localhost:8080/api/posts/", {
+    fetch("https://artoasis-server.onrender.com/api/posts/", {
       method: "POST",
       body: formData,
       headers: {
