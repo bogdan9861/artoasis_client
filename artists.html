@@ -19,23 +19,14 @@
           </a>
           <nav class="main-nav">
             <a href="artworks.html" class="nav-link">Работы</a>
-            <a href="events.html" class="nav-link">Мероприятия</a>
-            <a href="inspiration.html" class="nav-link">Вдохновение</a>
-            <a href="meetings.html" class="nav-link">Встречи</a>
-            <a href="blog.html" class="nav-link">Блог</a>
+            <a href="index.html#events" class="nav-link">Мероприятия</a>
+            <a href="artists.html" class="nav-link">Художники</a>
+            <a href="index.html#meetings" class="nav-link">Встречи</a>
+            <a href="index.html#blog" class="nav-link">Блог</a>
             <a href="about.html" class="nav-link">О нас</a>
           </nav>
         </div>
         <div class="header-right">
-          <div class="search-container">
-            <i class="fas fa-search search-icon"></i>
-            <input
-              id="search-input"
-              type="text"
-              class="search-input"
-              placeholder="Поиск работ, художников..."
-            />
-          </div>
           <button id="theme-toggle" class="theme-toggle">
             <i class="fas fa-sun"></i>
           </button>
@@ -43,12 +34,28 @@
             <a href="login.html" class="btn btn-outline">Войти</a>
             <a href="register.html" class="btn btn-primary">Регистрация</a>
           </div>
-          <span>name</span>
+          <a class="header__profile-name">name</a>
+          <button id="exit" style="margin-left: 10px">
+            <img
+              width="25px"
+              src="https://img.icons8.com/?size=100&id=61022&format=png&color=CD1010"
+              alt=""
+            />
+          </button>
         </div>
       </div>
     </header>
     <main>
-      <section class="section">
+      <section
+        class="section"
+        style="
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        "
+      >
         <div class="section-header container">
           <h2 class="section-title">Все художники</h2>
           <p class="section-description">
@@ -104,15 +111,33 @@
     </template>
 
     <script>
+      const user = JSON.parse(localStorage.getItem("ArtOasis-user"));
       const header_authorize = document.querySelector(
         ".header__profile-controls"
       );
+      const exit = document.querySelector("#exit");
+
+      exit.addEventListener("click", () => {
+        localStorage.removeItem("ArtOasis-token");
+        localStorage.removeItem("ArtOasis-user");
+        window.location.reload();
+      });
 
       if (localStorage.getItem("ArtOasis-token")) {
         header_authorize.style.display = "none";
+      } else {
+        exit.style.display = "none";
       }
+
+      const name_node = document.querySelector(".header__profile-name");
+      name_node.innerHTML = user?.name;
+      name_node.href = `profile.html?id=${user.id}`;
     </script>
+
     <script src="./scripts/unauthorized.js"></script>
+    <script src="./scripts/request.js"></script>
+    <script src="./scripts/service.js"></script>
+    <script src="./scripts/setFile.js"></script>
     <script src="./scripts/scriptartists.js"></script>
   </body>
 </html>

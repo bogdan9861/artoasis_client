@@ -50,6 +50,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
@@ -561,6 +565,7 @@ h6 {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 100%;
 }
 
 .artist-name {
@@ -1028,6 +1033,7 @@ h6 {
   max-width: 900px;
   max-height: 90vh;
   display: flex;
+  flex-direction: column;
   overflow: hidden;
 }
 

@@ -16,7 +16,7 @@ const artworkCardTemplate = document.getElementById("artwork-card-template");
 const artistCardTemplate = document.getElementById("artist-card-template");
 const blogCardTemplate = document.getElementById("blog-card-template");
 
-getAllPosts_request()
+getAllPosts_request(5)
   .then((res) => {
     const artworks = res.map((art) => ({
       id: art.id,
@@ -37,35 +37,20 @@ getAllPosts_request()
     console.log(e);
   });
 
-const artists = [
-  {
-    name: "Алехандро Вега",
-    specialty: "Абстрактное искусство",
-    bio: "Современный художник, специализирующийся на темных и абстрактных композициях.",
-    avatarSrc: "./images/artstation/animecig.jpg",
-    artworkCount: 48,
-    followers: 1423,
-    profileSlug: "alex",
-  },
-  {
-    name: "Изабель Лоран",
-    specialty: "Цифровое искусство",
-    bio: "Художник, создающий эмоциональные цифровые работы с акцентом на внутренние переживания.",
-    avatarSrc: "./images/artstation/cat3.jpg",
-    artworkCount: 36,
-    followers: 3789,
-    profileSlug: "isabelle",
-  },
-  {
-    name: "Кента Сато",
-    specialty: "Фотография",
-    bio: "Фотограф, запечатлевающий красоту закатов и природных пейзажей.",
-    avatarSrc: "./images/artstation/discolol.jpg",
-    artworkCount: 72,
-    followers: 5214,
-    profileSlug: "kenta",
-  },
-];
+getAllUsers_request(6)
+  .then((res) => {
+    const artists = res.map((artist) => ({
+      id: artist.id,
+      name: artist.name,
+      bio: artist.description,
+      avatarSrc: setFile(artist.avatar),
+      artworkCount: artist.posts.length,
+      followers: artist.subscribedTo.length,
+    }));
+
+    renderArtists(artists);
+  })
+  .catch((e) => console.log(e));
 
 const blogs = [
   {
@@ -154,8 +139,6 @@ document.addEventListener("DOMContentLoaded", () => {
     themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
   }
 
-  // Render initial content
-  renderArtists(artists);
   renderBlogs(blogs);
 
   // Add animation classes to hero elements
@@ -471,16 +454,22 @@ function renderArtists(artists) {
     const card = artistCardTemplate.content.cloneNode(true);
     const artistCard = card.querySelector(".artist-card");
 
+    artistCard.style.opacity = 1;
+
     artistCard.style.animationDelay = `${index * 0.1}s`;
 
     card.querySelector(".avatar-image").src = artist.avatarSrc;
     card.querySelector(".avatar-image").alt = artist.name;
 
     const artistLink = card.querySelector(".artist-link");
-    artistLink.href = `artist/${artist.profileSlug}.html`;
+    artistLink.href = `profile.html?id=${artist.id}`;
     artistLink.textContent = artist.name;
 
-    card.querySelector(".artist-specialty").textContent = artist.specialty;
+    if (artist.specialty) {
+      card.querySelector(".artist-specialty").textContent = artist.specialty;
+    } else {
+      card.querySelector(".artist-specialty").style.display = "none";
+    }
     card.querySelector(".artist-bio").textContent = artist.bio;
 
     card.querySelector(".artwork-count").textContent = artist.artworkCount;
@@ -488,10 +477,12 @@ function renderArtists(artists) {
 
     card.querySelector(
       ".view-profile-button"
-    ).href = `artist/${artist.profileSlug}.html`;
+    ).href = `profile.html?id=${artist.id}`;
 
     const followButton = card.querySelector(".follow-button");
+
     followButton.textContent = "Follow";
+
     followButton.addEventListener("click", function () {
       this.classList.toggle("following");
       const followerCount =
@@ -499,14 +490,65 @@ function renderArtists(artists) {
 
       if (this.classList.contains("following")) {
         this.textContent = "Following";
+        followButton.className = "btn following btn-outline";
         followerCount.textContent =
           Number.parseInt(followerCount.textContent) + 1;
       } else {
         this.textContent = "Follow";
+        followButton.className = "btn btn-primary";
         followerCount.textContent =
           Number.parseInt(followerCount.textContent) - 1;
       }
     });
+
+    isFollowed_request(artist.id)
+      .then((res) => {
+        console.log(res);
+
+        if (res.isFollowed) {
+          followButton.className = "btn following btn-outline";
+          followButton.innerHTML = "following";
+        } else {
+          followButton.className = "btn btn-primary";
+          followButton.innerHTML = "follow";
+        }
+        isFollowedInitialized(res.isFollowed);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
+    const onFollow = () => {
+      console.log(artist.id);
+
+      follow_request(artist.id)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    };
+
+    const onUnFollow = () => {
+      unfollow_request(artist.id)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    };
+
+    const isFollowedInitialized = (isFollowed) => {
+      followButton.addEventListener("click", () => {
+        if (isFollowed) {
+          onUnFollow();
+        } else {
+          onFollow();
+        }
+      });
+    };
 
     artistsGrid.appendChild(card);
   });

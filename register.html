@@ -23,22 +23,40 @@
 
     <!-- Main Content -->
     <main>
-      <section class="section">
-        <div class="container">
+      <section class="login-section">
+        <div class="login-container">
           <h2 class="section-title">Регистрация</h2>
           <p class="section-description">Создайте новый аккаунт Art Oasis</p>
           <form id="register-form" class="auth-form">
             <div class="form-group">
               <label for="username">Имя пользователя</label>
-              <input type="text" id="username" name="username" required />
+              <input
+                type="text"
+                id="username"
+                name="name"
+                required
+                placeholder="Введите имя"
+              />
             </div>
             <div class="form-group">
               <label for="email">Электронная почта</label>
-              <input type="email" id="email" name="email" required />
+              <input
+                type="email"
+                id="email"
+                name="login"
+                required
+                placeholder="Введите e-mail"
+              />
             </div>
             <div class="form-group">
               <label for="password">Пароль</label>
-              <input type="password" id="password" name="password" required />
+              <input
+                type="password"
+                id="password"
+                name="password"
+                required
+                placeholder="Введите пароль"
+              />
             </div>
             <button type="submit" class="btn btn-primary">
               Зарегистрироваться
@@ -71,6 +89,7 @@
       </div>
     </footer>
 
+    <script src="./scripts/setFile.js"></script>
     <script src="./scripts/service.js"></script>
     <script src="./scripts/auth.js"></script>
     <script src="./scripts/request.js"></script>

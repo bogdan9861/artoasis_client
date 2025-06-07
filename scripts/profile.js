@@ -118,7 +118,10 @@ const onUserLoaded = (user) => {
       formData.append("image", avatar);
     }
 
-    fetch("https://artoasis-server.onrender.com/api/users/", {
+    const url = "https://artoasis-server.onrender.com/api/users/";
+    // const url = "http://localhost:8080/api/users/";
+
+    fetch(url, {
       method: "PUT",
       body: formData,
       headers: {
@@ -227,7 +230,10 @@ const onUserLoaded = (user) => {
 
     create_modal.classList.remove("active");
 
-    fetch("https://artoasis-server.onrender.com/api/posts/", {
+    const url = "https://artoasis-server.onrender.com/api/posts/";
+    // const url = "http://localhost:8080/api/posts/";
+
+    fetch(url, {
       method: "POST",
       body: formData,
       headers: {

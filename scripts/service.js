@@ -14,8 +14,12 @@ const getUserById_request = async (id) => {
   return await request(`/users/${id}`, "GET");
 };
 
-const getAllPosts_request = async () => {
-  return await request("/posts/", "GET");
+const getAllUsers_request = async (limit) => {
+  return await request(`/users/all${limit ? `?limit=${limit}` : ""}`, "GET");
+};
+
+const getAllPosts_request = async (limit) => {
+  return await request(`/posts/${limit ? `?limit=${limit}` : ""}`, "GET");
 };
 
 const getPostById_request = async (id) => {

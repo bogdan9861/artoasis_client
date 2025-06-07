@@ -21,14 +21,14 @@ if (register_form) {
     const { name, login, password } = getFileds(register_form);
 
     register_request({
-      name: data?.username || "",
-      login: data?.email || "",
-      password: data?.password || "",
+      name: name || "",
+      login: login || "",
+      password: password || "",
     })
       .then((res) => {
         localStorage.setItem("ArtOasis-user", JSON.stringify(res));
         localStorage.setItem("ArtOasis-token", res.token);
-        window.location.href = "profile.html";
+        window.location.href = `profile.html?id=${res.id}`;
       })
       .catch((e) => {
         console.log(e);
