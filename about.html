@@ -137,6 +137,13 @@
             <a href="register.html" class="btn btn-primary">Регистрация</a>
           </div>
           <a class="header__profile-name"></a>
+          <button id="exit" style="margin-left: 10px">
+            <img
+              width="25px"
+              src="https://img.icons8.com/?size=100&id=61022&format=png&color=CD1010"
+              alt=""
+            />
+          </button>
         </div>
       </div>
     </header>
@@ -328,7 +335,7 @@
         </div>
       </div>
 
-      <h2 style="margin-bottom: 20px;">Наша команда</h2>
+      <h2 style="margin-bottom: 20px">Наша команда</h2>
       <div class="team-container">
         <div class="team-member">
           <img src="images/artstation/anime2.jpg" alt="member" />
@@ -349,14 +356,29 @@
     </main>
 
     <script>
+      const user = JSON.parse(localStorage.getItem("ArtOasis-user"));
       const header_authorize = document.querySelector(
         ".header__profile-controls"
       );
+      const exit = document.querySelector("#exit");
+
+      exit.addEventListener("click", () => {
+        localStorage.removeItem("ArtOasis-token");
+        localStorage.removeItem("ArtOasis-user");
+        window.location.reload();
+      });
 
       if (localStorage.getItem("ArtOasis-token")) {
         header_authorize.style.display = "none";
+      } else {
+        exit.style.display = "none";
       }
+
+      const name_node = document.querySelector(".header__profile-name");
+      name_node.innerHTML = user?.name;
+      name_node.href = `profile.html?id=${user.id}`;
     </script>
+
     <script src="./scripts/unauthorized.js"></script>
     <script src="./scripts/about.js"></script>
   </body>
