@@ -74,7 +74,7 @@ const onUserLoaded = (user) => {
     profileSlug: "youssef",
   }));
 
-  const favorites = user.favorite?.map((favorite) => ({
+  const favorites = user.Favorite?.map((favorite) => ({
     id: favorite?.post.id,
     title: favorite?.post.title,
     artist: favorite?.user.name,

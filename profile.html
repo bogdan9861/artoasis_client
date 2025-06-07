@@ -1076,12 +1076,13 @@
           const onLikesInitialize = (isLiked) => {
             likeButton.addEventListener("click", function () {
               this.classList.toggle("active");
-              const likeCount = this.parentNode.querySelector(".like-count");
+              const likeCount = card.querySelector(".like-count");
+
+              console.log(card);
+
               if (this.classList.contains("active")) {
-                likeCount.textContent = parseInt(likeCount.textContent) + 1;
                 this.innerHTML = '<i class="fas fa-heart"></i>';
               } else {
-                likeCount.textContent = parseInt(likeCount.textContent) - 1;
                 this.innerHTML = '<i class="far fa-heart"></i>';
               }
 
@@ -1177,9 +1178,11 @@
             </li>`;
           };
 
-          artwork.comments.forEach((comment) => {
-            setComment(comment.User.name, comment.text);
-          });
+          if (artwork.comments.length > 0) {
+            artwork.comments.forEach((comment) => {
+              setComment(comment.User.name, comment.text);
+            });
+          }
 
           commentsButton.addEventListener("click", () => {
             comments.classList.toggle("active");
