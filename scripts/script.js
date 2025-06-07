@@ -407,7 +407,7 @@ function renderArtworks(artworks) {
 
     const shareButton = card.querySelector(".share-button");
     shareButton.addEventListener("click", function () {
-      const url = `${window.location.origin}/artwork.html?id=${artwork.id}`;
+      const url = `${window.location.origin}/artoasis_client/artwork.html?id=${artwork.id}`;
 
       navigator.clipboard.writeText(url).then(() => {
         alert("Link copied to clipboard!");
